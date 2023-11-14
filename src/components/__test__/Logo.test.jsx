@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import renderer from "react-test-renderer";
-import Logo from "./Logo";
+import Logo from "../Logo";
 
 describe("Logo test", () => {
   it("Renders", () => {

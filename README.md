@@ -29,7 +29,9 @@ This is a clone of the Censys search application that allows you to search a hos
   - VITE_CENSYS_API_ID
   - VITE_CENSYS_SECRET
 - run `npm run dev`
-  - App will run at: http://localhost:5174/
+  - press 'o' in terminal or open at shown localhost server
+- to run test `npm run test`
+  - to see test coverage `npm run coverage`
 - Enjoy!
 
 

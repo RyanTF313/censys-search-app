@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import renderer from "react-test-renderer";
-import ErrorsMessage from "./ErrorsMessage";
+import ErrorsMessage from "../ErrorsMessage";
 
 describe("ErrorsMessage Banner test", () => {
   it("no error", () => {

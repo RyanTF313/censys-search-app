@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { SearchAPI } from "../apis/SearchAPI";
+import { SearchAPIService } from "../apis/SearchAPIService";
 import { ResultsContext } from "../context/ResultsContext";
 import { PaginationContext } from "../context/PaginationContext";
 import { RequestParamBuilderContext } from "../context/RequestParamBuilderContext";
@@ -17,7 +17,10 @@ function Pagination() {
   };
 
   const nextPage = async () => {
-    const res = await SearchAPI.search({...params, ...{cursor: next}});
+    const res = await SearchAPIService.search({
+      ...params,
+      ...{ cursor: next },
+    });
     setParams({ ...params, ...{ cursor: res.links.next } });
     setResults(res.hits);
     setPrev(res.links.prev);
@@ -25,7 +28,10 @@ function Pagination() {
   };
 
   const prevPage = async () => {
-    const res = await SearchAPI.search({...params, ...{cursor: prev}});
+    const res = await SearchAPIService.search({
+      ...params,
+      ...{ cursor: prev },
+    });
     setParams({ ...params, ...{ cursor: res.links.prev } });
     setResults(res.hits);
     setPrev(res.links.prev);
@@ -39,6 +45,7 @@ function Pagination() {
 
   return (
     <div
+      className="Pagination"
       style={{
         display: "flex",
         flexDirection: "row",
@@ -48,6 +55,7 @@ function Pagination() {
     >
       <div>
         <button
+        className="PrevBtn"
           style={{ width: 200, height: 24 }}
           value={"prev"}
           onClick={handleClick}
@@ -57,6 +65,7 @@ function Pagination() {
       </div>
       <div>
         <button
+        className="NextBtn"
           style={{ width: 200, height: 24 }}
           value={"next"}
           onClick={handleClick}

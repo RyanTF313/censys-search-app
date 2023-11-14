@@ -3,12 +3,12 @@ import Pagination from "./Pagination";
 
 function SearchResult({ results, inputValue }) {
   return results ? (
-    <div className="ResultsList">
+    <div className="Results">
       <HostResultsList results={results} />
       <Pagination inputValue={inputValue} />
     </div>
   ) : (
-    <div className="ResultsList"></div>
+    <div className="Results"></div>
   );
 }
 

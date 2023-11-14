@@ -1,19 +1,22 @@
-import { useContext } from "react";
-import { SearchAPI } from "../apis/SearchAPI";
+import { useContext, useEffect, useState } from "react";
+import { SearchAPIService } from "../apis/SearchAPIService";
 import { ErrorContext } from "../context/ErrorsContext";
 import { ResultsContext } from "../context/ResultsContext";
 import { PaginationContext } from "../context/PaginationContext";
 import { RequestParamBuilderContext } from "../context/RequestParamBuilderContext";
 
 function Search({ inputValue, setInputValue }) {
+  const [loading, setLoading] = useState(false);
   const errorContext = useContext(ErrorContext);
   const resultsContext = useContext(ResultsContext);
   const paginationContext = useContext(PaginationContext);
   const requestParamBuilderContext = useContext(RequestParamBuilderContext);
   const { setErrors } = errorContext;
-  const { setResults } = resultsContext;
+  const { results, setResults } = resultsContext;
   const { setPrev, setNext } = paginationContext;
   const { params, setParams } = requestParamBuilderContext;
+
+  useEffect(() => {}, [results]);
 
   const handleChange = (e) => {
     setInputValue(e.target.value);
@@ -25,14 +28,26 @@ function Search({ inputValue, setInputValue }) {
     e.preventDefault();
     setErrors({});
 
-    const res = await SearchAPI.search(params);
+    setLoading(true);
+    const res = await SearchAPIService.search(params);
+    if (res) {
+      setLoading(false);
+    }
+
+    if (res.code !== 200) {
+      setErrors(res);
+      return;
+    }
+
     setParams({ ...params, ...{ cursor: res.links.next } });
     setResults(res.hits);
     setPrev(res.links.prev);
     setNext(res.links.next);
   };
 
-  return (
+  return loading ? (
+    <div>Loading...</div>
+  ) : (
     <div
       className="Search"
       style={{
@@ -42,7 +57,7 @@ function Search({ inputValue, setInputValue }) {
       }}
     >
       <form
-        className="character-search"
+        className="HostSearch"
         style={{
           display: "flex",
           flexDirection: "row",
@@ -52,8 +67,8 @@ function Search({ inputValue, setInputValue }) {
       >
         <input
           type="text"
-          name="character"
-          id=""
+          name="input"
+          id="search-input"
           value={inputValue}
           onChange={handleChange}
           style={{ minWidth: 600, minHeight: 50, fontSize: 24 }}

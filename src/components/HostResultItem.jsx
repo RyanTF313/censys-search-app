@@ -4,13 +4,25 @@ function HostResultItem({ result }) {
   const services = groupServices(result.services);
 
   return result.ip ? (
-    <div style={{ display: "flex", flexDirection: "column" }}>
-      <div style={{ color: "blue", fontSize: 24, fontWeight: "bold" }}>
+    <div
+      className={"HostResult"}
+      style={{ display: "flex", flexDirection: "column" }}
+    >
+      <div
+        className={"IpAddress"}
+        style={{ color: "blue", fontSize: 24, fontWeight: "bold" }}
+      >
         {result.ip}
       </div>
-      <div style={{ display: "flex", flexDirection: "row" }}>
+      <div
+        className="IpServices"
+        style={{ display: "flex", flexDirection: "row", flexWrap: "wrap" }}
+      >
         {Object.keys(services).map((service) => (
-          <div key={service} style={{ color: "blue", fontSize: 18, margin: 8 }}>
+          <div
+            key={service}
+            style={{ color: "blue", fontSize: 18, margin: 4, width: "10%" }}
+          >
             <div>
               {services[service]} /{service}
             </div>
